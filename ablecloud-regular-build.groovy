@@ -43,9 +43,9 @@ pipeline {
         }
 
         stage('Glue Build') {
-            steps{
-                build 'glue-build'
-            }
+//            steps{
+//                build 'glue-build'
+//            }
             stpes{
                 sh("""ssh root@10.10.0.10 'rm -rf /data/repos/centos/glue/*'""")
                 sh("""scp ${BRF}/*Glue*.rpm 10.10.0.10:/data/repos/centos/glue""")
