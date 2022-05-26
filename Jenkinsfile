@@ -47,10 +47,6 @@ pipeline {
                 sh("""ssh root@10.10.0.10 'rm -rf /data/repos/centos/glue/*'""")
                 sh("""scp ${BRF}/*Glue*.rpm 10.10.0.10:/data/repos/centos/glue""")
                 sh("""ssh root@10.10.0.10 'createrepo /data/repos/centos/glue/.'""")
-//                10.10.0.10
-//                /data/repos/centos/glue 데이터 삭제
-//                rpm 카피
-//                createrepo .
             }
         }
 
