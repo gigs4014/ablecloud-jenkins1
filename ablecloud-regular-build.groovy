@@ -58,7 +58,7 @@ pipeline {
 
         stage('Glue Image Build And DockerHub Push') {
             steps{
-                build 'glue-build'
+                build 'glue-image'
             }
         }
 
