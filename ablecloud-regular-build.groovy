@@ -105,7 +105,7 @@ pipeline {
 
         stage('Ablestack Template Create') {
             steps{
-                sh("""ssh root@10.10.1.2 'cp /var/lib/libvirt/images/ablestack-template-back.qcow2 /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
+                sh("""ssh root@10.10.1.2 'cp /var/lib/libvirt/images/ablestack-cerato-original.qcow2 /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
                 sh("""ssh root@10.10.1.2 'virsh create /var/lib/libvirt/images/ablestack-cerato.xml'""")
 
 //                server_ip="10.10.0.1"
