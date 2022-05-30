@@ -73,13 +73,15 @@ pipeline {
 
         stage('Netdive Build') {
             steps{
-                build 'netdive-ui'
+                sh('echo Netdive Build-220530 완료')
+//                 build 'netdive-ui'
             }
         }
 
         stage('Wall Build') {
             steps{
-                build 'wall-build'
+                sh('echo Netdive Build-220530 실패')
+//                 build 'wall-build'
             }
         }
 
