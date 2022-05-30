@@ -30,6 +30,7 @@ pipeline {
                    writeFile(file: '${JWF}/versionInfo.txt', text: newVersionInfo)
 
                    sh('cat ${JWF}/versionInfo.txt')
+                   sh('rm -rf ${JWF}/'+newDate)
                    sh('mkdir ${JWF}/'+newDate)
                    NEW_DATE=newDate
                }
