@@ -65,9 +65,10 @@ pipeline {
 //        }
 
         stage('Mold Build') {
-//             steps{
+            steps{
+                sh('echo Mold Build')
 //                 build 'mold'
-//             }
+            }
         }
 
         stage('Netdive Build') {
