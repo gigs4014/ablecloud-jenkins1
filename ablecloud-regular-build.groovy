@@ -115,9 +115,9 @@ pipeline {
         stage('Ablestack Template Create') {
             steps{
                 sh('echo Build result file Move to version folder 완료')
-//                 sh("""ssh root@10.10.1.2 'rm -rf /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
-//                 sh("""ssh root@10.10.1.2 'cp /var/lib/libvirt/images/ablestack-cerato-original.qcow2 /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
-//                 sh("""ssh root@10.10.1.2 'virsh create /var/lib/libvirt/images/ablestack-cerato.xml'""")
+                sh("""ssh root@10.10.1.2 'rm -rf /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
+                sh("""ssh root@10.10.1.2 'cp /var/lib/libvirt/images/ablestack-cerato-original.qcow2 /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
+                sh("""ssh root@10.10.1.2 'virsh create /var/lib/libvirt/images/ablestack-cerato.xml'""")
                 sh '''server_ip="10.10.0.100"
                     for ((i=0;i<=49;i++))
                     do
