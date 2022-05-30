@@ -52,17 +52,19 @@ pipeline {
 
        stage('Glue RPM Copy to mirroring') {
            steps{
-               sh("""ssh root@10.10.0.10 'rm -rf /data/repos/centos/glue/*'""")
-               sh("""scp ${BRF}/*Glue*.rpm 10.10.0.10:/data/repos/centos/glue""")
-               sh("""ssh root@10.10.0.10 'createrepo /data/repos/centos/glue/.'""")
+               sh('echo Glue RPM Copy to mirroring 완료')               
+//                sh("""ssh root@10.10.0.10 'rm -rf /data/repos/centos/glue/*'""")
+//                sh("""scp ${BRF}/*Glue*.rpm 10.10.0.10:/data/repos/centos/glue""")
+//                sh("""ssh root@10.10.0.10 'createrepo /data/repos/centos/glue/.'""")
            }
        }
-//
-//        stage('Glue Image Build And DockerHub Push') {
-//            steps{
+
+       stage('Glue Image Build And DockerHub Push') {
+           steps{
+               sh('echo Glue Image Build And DockerHub Push 완료')
 //                build 'glue-image'
-//            }
-//        }
+           }
+       }
 
         stage('Mold Build') {
             steps{
@@ -87,6 +89,7 @@ pipeline {
 
        stage('Build result file Move to version folder') {
            steps{
+                sh('echo Build result file Move to version folder 완료')
 //                 sh("""cp ${BRF}/cloudstack-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm ${JWF}/${NEW_DATE}/cloudstack-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64-${NEW_DATE}.rpm""")
 //                 sh("""cp ${BRF}/cloudstack-baremetal-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm ${JWF}/${NEW_DATE}/cloudstack-baremetal-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64-${NEW_DATE}.rpm""")
 //                 sh("""cp ${BRF}/cloudstack-cli-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm ${JWF}/${NEW_DATE}/cloudstack-cli-4.17.0.0-SNAPSHOT.1.el8.x86_64-${NEW_DATE}.rpm""")
@@ -104,19 +107,28 @@ pipeline {
 //                 sh("""cp ${BRF}/cockpit-ws-255.v2.0.12.0525-1.el8.x86_64.rpm ${JWF}/${NEW_DATE}/cockpit-ws-255.v2.0.12.0525-1.el8.x86_64-${NEW_DATE}.rpm""")
 //                 sh("""cp ${BRF}/skydive ${JWF}/${NEW_DATE}/skydive-${NEW_DATE}""")
 //                 sh("""cp -r ${BRF}/grafana ${JWF}/${NEW_DATE}/grafana-${NEW_DATE}""")
-                  sh("""cp -r ${BRF}/* ${JWF}/${NEW_DATE}/""")
+//                   sh("""cp -r ${BRF}/* ${JWF}/${NEW_DATE}/""")
            }
        }
 
         stage('Ablestack Template Create') {
             steps{
-                sh("""ssh root@10.10.1.2 'rm -rf /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
-                sh("""ssh root@10.10.1.2 'cp /var/lib/libvirt/images/ablestack-cerato-original.qcow2 /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
-                sh("""ssh root@10.10.1.2 'virsh create /var/lib/libvirt/images/ablestack-cerato.xml'""")
-
-//                server_ip="10.10.0.1"
-//                SYS_PING="ping -c 5 ${server_ip} | grep 'received' | awk -F',' '{print \$2}'"
-//                echo "Pinging ${server_ip} with response: "${SYS_PING}" "
+                sh('echo Build result file Move to version folder 완료')
+//                 sh("""ssh root@10.10.1.2 'rm -rf /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
+//                 sh("""ssh root@10.10.1.2 'cp /var/lib/libvirt/images/ablestack-cerato-original.qcow2 /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
+//                 sh("""ssh root@10.10.1.2 'virsh create /var/lib/libvirt/images/ablestack-cerato.xml'""")
+                sh '''server_ip="10.10.0.100"
+                    for ((i=0;i<=49;i++))
+                    do
+                        SYS_PING=$(ping -c5 $server_ip | grep 'received' | awk -F'[, ]' '{print $5}')
+                        echo $SYS_PING
+                        if [ "$SYS_PING" -gt "0" ];
+                        then
+                            exit 0
+                        fi
+                    done                    
+                    '''
+                sh('''
             }
         }
     }
