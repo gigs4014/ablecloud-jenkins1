@@ -37,16 +37,18 @@ pipeline {
        }
 
        stage('Cockpit Build') {
-//            steps{
+           steps{
+               sh('echo Cockpit Build')
 //                build 'cockpit'
-//            }
+           }
        }
 
-//         stage('Glue Build') {
-//             steps{
+        stage('Glue Build') {
+            steps{
+                sh('echo Glue Build')
 //                 build 'glue-build'
-//             }
-//        }
+            }
+       }
 
        stage('Glue RPM Copy to mirroring') {
            steps{
