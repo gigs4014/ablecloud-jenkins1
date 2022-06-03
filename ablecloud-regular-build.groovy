@@ -6,6 +6,8 @@ pipeline {
     environment {
         JWF = '/mnt/jenkins-work'
         BRF = '${JWF}/build'
+        SF = '${JWF}/service'
+        SBINF = '${JWF}/sbin'
     }
 
     stages {
@@ -136,9 +138,23 @@ pipeline {
                 sh("""rm -rf ${BRF}/cloudstack-mysql-ha-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
                 sh("""rm -rf ${BRF}/cloudstack-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
 
-                sh("""scp /mnt/jenkins-work/build/*.rpm 10.10.0.100:/mnt""")
-                sh("""scp /mnt/jenkins-work/build/*.rpm 10.10.0.100:/mnt""")
+                sh("""scp ${BRF}/*.rpm 10.10.0.100:/mnt""")
+                sh("""scp ${BRF}/*.rpm 10.10.0.100:/mnt""")
                 sh("""ssh root@10.10.0.100 'yum install -y /mnt/*.rpm'""")
+                sh("""ssh root@10.10.0.100 'mkdir /usr/share/ablestack'""")
+                sh("""tar -cvf ${BRF}/ablestack-netdive.tar ablestack-netdive/""")
+                sh("""scp ${BRF}/ablestack-netdive.tar root@10.10.0.100:/usr/share/ablestack/""")
+                sh("""ssh root@10.10.0.100 'tar -xvf /usr/share/ablestack/ablestack-netdive.tar -C /usr/share/ablestack'""")
+                
+                sh("""tar -cvf ${BRF}/ablestack-wall.tar ablestack-wall/""")
+                sh("""scp ${BRF}/ablestack-wall.tar root@10.10.0.100:/usr/share/ablestack/""")
+                sh("""ssh root@10.10.0.100 'tar -xvf /usr/share/ablestack/ablestack-wall.tar -C /usr/share/ablestack'""")
+
+                sh("""scp ${SBINF}/* root@10.10.0.100:/usr/sbin/""")
+                sh("""ssh root@10.10.0.100 'grafana-cli plugins install grafana-clock-pane'""")
+                sh("""ssh root@10.10.0.100 'grafana-cli plugins install grafana-image-renderer'""")
+                
+                sh("""scp ${SF}/* root@10.10.0.100:/etc/systemd/system/""")
             }
         }
     }
