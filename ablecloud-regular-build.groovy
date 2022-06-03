@@ -78,8 +78,8 @@ pipeline {
 
         stage('Mold Build') {
             steps{
-                sh('echo Mold Build')
-//                 build 'mold'
+//                 sh('echo Mold Build')
+                build 'mold'
             }
         }
 
@@ -92,8 +92,8 @@ pipeline {
 
         stage('Wall Build') {
             steps{
-                sh('echo Netdive Build')
-//                 build 'wall-build'
+//                 sh('echo Netdive Build')
+                build 'wall-build'
             }
         }
 
