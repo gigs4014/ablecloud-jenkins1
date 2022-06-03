@@ -155,6 +155,10 @@ pipeline {
                 sh("""ssh root@10.10.0.100 'grafana-cli plugins install grafana-image-renderer'""")
                 
                 sh("""scp ${SF}/* root@10.10.0.100:/etc/systemd/system/""")
+                
+                sh("""ssh root@10.10.1.2 'virsh shutdown ablestack-cerato'""")
+                sh("""ssh root@10.10.1.2 'rm -rf /split/*'""")
+                sh("""ssh root@10.10.1.2 'split -b 1G /var/lib/libvirt/images/ablestack-cerato-original.qcow2 /split/ablestack-cerato-original.qcow2_split.'""")
             }
         }
     }
