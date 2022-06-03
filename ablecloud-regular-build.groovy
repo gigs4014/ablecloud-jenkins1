@@ -129,8 +129,16 @@ pipeline {
                         fi
                     done                    
                     '''
+                sh("""rm -rf ${BRF}/cloudstack-baremetal-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
+                sh("""rm -rf ${BRF}/cloudstack-cli-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
+                sh("""rm -rf ${BRF}/cloudstack-integration-tests-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
+                sh("""rm -rf ${BRF}/cloudstack-marvin-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
+                sh("""rm -rf ${BRF}/cloudstack-mysql-ha-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
+                sh("""rm -rf ${BRF}/cloudstack-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
+
                 sh("""scp /mnt/jenkins-work/build/*.rpm 10.10.0.100:/mnt""")
-                sh(""" ssh root@10.10.0.100 'yum install -y /mnt/*.rpm'""")
+                sh("""scp /mnt/jenkins-work/build/*.rpm 10.10.0.100:/mnt""")
+                sh("""ssh root@10.10.0.100 'yum install -y /mnt/*.rpm --skip-broken'""")
             }
         }
     }
