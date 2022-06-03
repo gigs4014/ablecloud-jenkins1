@@ -138,7 +138,7 @@ pipeline {
 
                 sh("""scp /mnt/jenkins-work/build/*.rpm 10.10.0.100:/mnt""")
                 sh("""scp /mnt/jenkins-work/build/*.rpm 10.10.0.100:/mnt""")
-                sh("""ssh root@10.10.0.100 'yum install -y /mnt/*.rpm --skip-broken'""")
+                sh("""ssh root@10.10.0.100 'yum install -y /mnt/*.rpm'""")
             }
         }
     }
