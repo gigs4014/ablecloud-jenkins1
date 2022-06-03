@@ -41,31 +41,38 @@ pipeline {
 
        stage('Cockpit Build') {
            steps{
-               sh('echo Cockpit Build')
-//                build 'cockpit'
+//                sh('echo Cockpit Build')
+               build 'cockpit'
+           }
+       }
+        
+        stage('Cockpit-plugin Build') {
+           steps{
+//                sh('echo Cockpit Build')
+               build 'cockpit-plugin'
            }
        }
 
         stage('Glue Build') {
             steps{
-                sh('echo Glue Build')
-//                 build 'glue-build'
+//                 sh('echo Glue Build')
+                build 'glue-build'
             }
        }
 
        stage('Glue RPM Copy to mirroring') {
            steps{
-               sh('echo Glue RPM Copy to mirroring 완료')               
-//                sh("""ssh root@10.10.0.10 'rm -rf /data/repos/centos/glue/*'""")
-//                sh("""scp ${BRF}/*Glue*.rpm 10.10.0.10:/data/repos/centos/glue""")
-//                sh("""ssh root@10.10.0.10 'createrepo /data/repos/centos/glue/.'""")
+//                sh('echo Glue RPM Copy to mirroring 완료')
+               sh("""ssh root@10.10.0.10 'rm -rf /data/repos/centos/glue/*'""")
+               sh("""scp ${BRF}/*Glue*.rpm 10.10.0.10:/data/repos/centos/glue""")
+               sh("""ssh root@10.10.0.10 'createrepo /data/repos/centos/glue/.'""")
            }
        }
 
        stage('Glue Image Build And DockerHub Push') {
            steps{
-               sh('echo Glue Image Build And DockerHub Push 완료')
-//                build 'glue-image'
+//                sh('echo Glue Image Build And DockerHub Push 완료')
+               build 'glue-image'
            }
        }
 
@@ -78,21 +85,21 @@ pipeline {
 
         stage('Netdive Build') {
             steps{
-                sh('echo Netdive Build-220530 완료')
-//                 build 'netdive-ui'
+//                 sh('echo Netdive Build-220530 완료')
+                build 'netdive-ui'
             }
         }
 
         stage('Wall Build') {
             steps{
-                sh('echo Netdive Build-220530 실패')
-//                 build 'wall-build'
+//                 sh('echo Netdive Build-220530 실패')
+                build 'wall-build'
             }
         }
 
        stage('Build result file Move to version folder') {
            steps{
-                sh('echo Build result file Move to version folder 완료')
+//                 sh('echo Build result file Move to version folder 완료')
 //                 sh("""cp ${BRF}/cloudstack-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm ${JWF}/${NEW_DATE}/cloudstack-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64-${NEW_DATE}.rpm""")
 //                 sh("""cp ${BRF}/cloudstack-baremetal-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm ${JWF}/${NEW_DATE}/cloudstack-baremetal-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64-${NEW_DATE}.rpm""")
 //                 sh("""cp ${BRF}/cloudstack-cli-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm ${JWF}/${NEW_DATE}/cloudstack-cli-4.17.0.0-SNAPSHOT.1.el8.x86_64-${NEW_DATE}.rpm""")
@@ -110,7 +117,7 @@ pipeline {
 //                 sh("""cp ${BRF}/cockpit-ws-255.v2.0.12.0525-1.el8.x86_64.rpm ${JWF}/${NEW_DATE}/cockpit-ws-255.v2.0.12.0525-1.el8.x86_64-${NEW_DATE}.rpm""")
 //                 sh("""cp ${BRF}/skydive ${JWF}/${NEW_DATE}/skydive-${NEW_DATE}""")
 //                 sh("""cp -r ${BRF}/grafana ${JWF}/${NEW_DATE}/grafana-${NEW_DATE}""")
-//                   sh("""cp -r ${BRF}/* ${JWF}/${NEW_DATE}/""")
+                  sh("""cp -r ${BRF}/* ${JWF}/${NEW_DATE}/""")
            }
        }
 
