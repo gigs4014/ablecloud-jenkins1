@@ -92,8 +92,8 @@ pipeline {
 
         stage('Wall Build') {
             steps{
-//                 sh('echo Netdive Build-220530 실패')
-                build 'wall-build'
+                sh('echo Netdive Build')
+//                 build 'wall-build'
             }
         }
 
