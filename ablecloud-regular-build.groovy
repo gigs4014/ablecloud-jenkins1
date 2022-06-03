@@ -124,48 +124,7 @@ pipeline {
         stage('Ablestack Template Create') {
             steps{
                 sh('echo Build result file Move to version folder 완료')
-                sh("""ssh root@10.10.1.2 'rm -rf /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
-                sh("""ssh root@10.10.1.2 'cp /var/lib/libvirt/images/ablestack-cerato-original.qcow2 /var/lib/libvirt/images/ablestack-cerato.qcow2'""")
-                sh("""ssh root@10.10.1.2 'virsh create /var/lib/libvirt/images/ablestack-cerato.xml'""")
-                sh '''server_ip="10.10.0.100"
-                    for ((i=0;i<=49;i++))
-                    do
-                        SYS_PING=$(ping -c5 $server_ip | grep 'received' | awk -F'[, ]' '{print $5}')
-                        echo $SYS_PING
-                        if [ "$SYS_PING" -gt "0" ];
-                        then
-                            exit 0
-                        fi
-                    done                    
-                    '''
-                sh("""rm -rf ${BRF}/cloudstack-baremetal-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
-                sh("""rm -rf ${BRF}/cloudstack-cli-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
-                sh("""rm -rf ${BRF}/cloudstack-integration-tests-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
-                sh("""rm -rf ${BRF}/cloudstack-marvin-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
-                sh("""rm -rf ${BRF}/cloudstack-mysql-ha-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
-                sh("""rm -rf ${BRF}/cloudstack-agent-4.17.0.0-SNAPSHOT.1.el8.x86_64.rpm""")
-
-                sh("""scp ${BRF}/*.rpm 10.10.0.100:/mnt""")
-                sh("""scp ${BRF}/*.rpm 10.10.0.100:/mnt""")
-                sh("""ssh root@10.10.0.100 'yum install -y /mnt/*.rpm'""")
-                sh("""ssh root@10.10.0.100 'mkdir /usr/share/ablestack'""")
-                sh("""tar -cvf ${BRF}/ablestack-netdive.tar ablestack-netdive/""")
-                sh("""scp ${BRF}/ablestack-netdive.tar root@10.10.0.100:/usr/share/ablestack/""")
-                sh("""ssh root@10.10.0.100 'tar -xvf /usr/share/ablestack/ablestack-netdive.tar -C /usr/share/ablestack'""")
-                
-                sh("""tar -cvf ${BRF}/ablestack-wall.tar ablestack-wall/""")
-                sh("""scp ${BRF}/ablestack-wall.tar root@10.10.0.100:/usr/share/ablestack/""")
-                sh("""ssh root@10.10.0.100 'tar -xvf /usr/share/ablestack/ablestack-wall.tar -C /usr/share/ablestack'""")
-
-                sh("""scp ${SBINF}/* root@10.10.0.100:/usr/sbin/""")
-                sh("""ssh root@10.10.0.100 'grafana-cli plugins install grafana-clock-pane'""")
-                sh("""ssh root@10.10.0.100 'grafana-cli plugins install grafana-image-renderer'""")
-                
-                sh("""scp ${SF}/* root@10.10.0.100:/etc/systemd/system/""")
-                
-                sh("""ssh root@10.10.1.2 'virsh shutdown ablestack-cerato'""")
-                sh("""ssh root@10.10.1.2 'rm -rf /split/*'""")
-                sh("""ssh root@10.10.1.2 'split -b 1G /var/lib/libvirt/images/ablestack-cerato-original.qcow2 /split/ablestack-cerato-original.qcow2_split.'""")
+                build 'make-qcow2-template'
             }
         }
     }
