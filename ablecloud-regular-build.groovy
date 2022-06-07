@@ -117,7 +117,7 @@ pipeline {
 //                 sh("""cp ${BRF}/cockpit-ws-255.v2.0.12.0525-1.el8.x86_64.rpm ${JWF}/${NEW_DATE}/cockpit-ws-255.v2.0.12.0525-1.el8.x86_64-${NEW_DATE}.rpm""")
 //                 sh("""cp ${BRF}/skydive ${JWF}/${NEW_DATE}/skydive-${NEW_DATE}""")
 //                 sh("""cp -r ${BRF}/grafana ${JWF}/${NEW_DATE}/grafana-${NEW_DATE}""")
-                  sh("""cp -r ${BRF}/* ${JWF}/${NEW_DATE}/""")
+                  sh("""mv ${BRF}/* ${JWF}/${NEW_DATE}/""")
            }
        }
 
