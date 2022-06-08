@@ -123,8 +123,15 @@ pipeline {
 
         stage('Ablestack Template Create') {
             steps{
-                sh('echo Build result file Move to version folder 완료')
+//                 sh('echo Build result file Move to version folder 완료')
                 build 'make-qcow2-template'
+            }
+        }
+        
+        stage('Ablestack ISO Create') {
+            steps{
+//                 sh('echo Build result file Move to version folder 완료')
+                build 'ablestack-kickstart'
             }
         }
     }
