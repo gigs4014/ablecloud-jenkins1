@@ -133,5 +133,11 @@ pipeline {
                 build 'ablestack-kickstart'
             }
         }
+        
+        stage('Ablestack ISO Copy') {
+            steps{
+                sh("""cp -r ${JWF}/ISO/* ${JWF}/${NEW_DATE}/""")
+                sh("""rm -rf ${JWF}/ISO/*""")
+            }
     }
 }
