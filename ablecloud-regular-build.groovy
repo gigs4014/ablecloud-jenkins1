@@ -140,5 +140,6 @@ pipeline {
                 sh("""cp -r ${JWF}/ISO/* ${JWF}/${NEW_DATE}/""")
                 sh("""rm -rf ${JWF}/ISO/*""")
             }
+        }
     }
 }
