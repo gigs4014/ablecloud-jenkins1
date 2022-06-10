@@ -15,6 +15,7 @@ pipeline {
            steps {
                // build job : 'works_build_test'
                script {
+                   sh('rm -rf ${BRF}/*')
                    def versionInfo = readFile(file: '/mnt/jenkins-work/versionInfo.txt')
                    println(versionInfo)
                    def (codeName, version, date) = versionInfo.split('-')
