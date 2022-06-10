@@ -27,9 +27,8 @@ pipeline {
                    def today = new Date()
                    def newDate = dateFormat.format(today)
                    def newVersionInfo = codeName + '-' + a + '.' + b + '.' + intC.toString() + '-' + newDate
-                   println(newVersionInfo)
-
-                   writeFile(file: '/mnt/jenkins-work/versionInfo.txt', text: newVersionInfo)
+                   println('newVersionInfo : '+newVersionInfo)
+                   writeFile file: '/mnt/jenkins-work/versionInfo.txt', text: newVersionInfo
 
                    sh('cat ${JWF}/versionInfo.txt')
                    sh('rm -rf ${JWF}/'+newDate)
