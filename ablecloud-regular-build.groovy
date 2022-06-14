@@ -5,9 +5,9 @@ pipeline {
 
     environment {
         JWF = '/mnt/jenkins-work'
-        BRF = '${JWF}/build'
-        SF = '${JWF}/service'
-        SBINF = '${JWF}/sbin'
+        BRF = '/mnt/jenkins-work/build'
+        SF = '/mnt/jenkins-work/service'
+        SBINF = '/mnt/jenkins-work/sbin'
     }
 
     stages {
