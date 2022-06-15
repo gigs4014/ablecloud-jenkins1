@@ -137,8 +137,8 @@ pipeline {
         
         stage('Ablestack ISO Copy') {
             steps{
-                sh("""cp -r ${JWF}/ISO/* ${JWF}/${NEW_DATE}/""")
                 sh("""rm -rf ${JWF}/ISO/*""")
+                sh("""cp -r ${JWF}/ISO/* ${JWF}/${NEW_DATE}/""")
             }
         }
     }
